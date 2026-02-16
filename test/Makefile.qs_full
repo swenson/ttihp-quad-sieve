@@ -1,0 +1,27 @@
+# Makefile for Quadratic Sieve Full Test
+# Tests factorization of N = 604227100699 = 677779 × 891481
+
+# Defaults
+SIM ?= icarus
+FST ?= -fst
+TOPLEVEL_LANG ?= verilog
+SRC_DIR = $(PWD)/../src
+PROJECT_SOURCES = project.v block_processor_core.v tt_um_swenson_params.v tt_um_swenson_inter_bp.v spi.v
+
+# RTL simulation
+SIM_BUILD = sim_build/qs_full
+VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES))
+
+# Allow sharing configuration
+COMPILE_ARGS += -I$(SRC_DIR)
+COMPILE_ARGS += -DCOCOTB_SIM
+
+# Use QS full testbench with SPI RAM model
+VERILOG_SOURCES += $(PWD)/tb_qs_full.v
+TOPLEVEL = tb_qs_full
+
+# QS full test module
+COCOTB_TEST_MODULES = test_qs_full
+
+# Include cocotb's make rules
+include $(shell cocotb-config --makefiles)/Makefile.sim

@@ -1,0 +1,28 @@
+# Makefile for Inter-BP Communication Tests
+# Tests three tt_um_swenson_cqs instances wired together via uio[7:4]
+
+# Defaults
+SIM ?= icarus
+FST ?= -fst
+TOPLEVEL_LANG ?= verilog
+SRC_DIR = $(PWD)/../src
+PROJECT_SOURCES = project.v block_processor_core.v tt_um_swenson_params.v tt_um_swenson_inter_bp.v spi.v
+
+# RTL simulation
+SIM_BUILD = sim_build/inter_bp
+VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES))
+
+# Allow sharing configuration
+COMPILE_ARGS += -I$(SRC_DIR)
+COMPILE_ARGS += -I$(PWD)
+COMPILE_ARGS += -DCOCOTB_SIM
+
+# Use inter-BP testbench with three tt_um_swenson_cqs instances
+VERILOG_SOURCES += $(PWD)/tb_inter_bp.v
+TOPLEVEL = tb_inter_bp
+
+# Inter-BP test modules
+COCOTB_TEST_MODULES = test_inter_bp
+
+# Include cocotb's make rules
+include $(shell cocotb-config --makefiles)/Makefile.sim

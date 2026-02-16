@@ -1,0 +1,26 @@
+# Makefile for Multi-BP Tests
+# Tests two block processors wired together in a pipeline
+
+# Defaults
+SIM ?= icarus
+FST ?= -fst
+TOPLEVEL_LANG ?= verilog
+SRC_DIR = $(PWD)/../src
+PROJECT_SOURCES = project.v block_processor_core.v tt_um_swenson_params.v tt_um_swenson_inter_bp.v spi.v
+
+# RTL simulation
+SIM_BUILD = sim_build/multi_bp
+VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES))
+
+# Allow sharing configuration
+COMPILE_ARGS += -I$(SRC_DIR)
+
+# Use multi-BP testbench that instantiates two block processors
+VERILOG_SOURCES += $(PWD)/tb_multi_bp.v
+TOPLEVEL = tb_multi_bp
+
+# Multi-BP test modules
+COCOTB_TEST_MODULES = test_multi_bp
+
+# Include cocotb's make rules
+include $(shell cocotb-config --makefiles)/Makefile.sim

@@ -1,0 +1,26 @@
+# Makefile for Multiplexed Pipeline Tests
+# Tests two BPs connected via external wires only (multiplexed protocol)
+
+# Defaults
+SIM ?= icarus
+FST ?= -fst
+TOPLEVEL_LANG ?= verilog
+SRC_DIR = $(PWD)/../src
+PROJECT_SOURCES = project.v block_processor_core.v tt_um_swenson_params.v tt_um_swenson_inter_bp.v spi.v
+
+# RTL simulation
+SIM_BUILD = sim_build/mux_pipeline
+VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES))
+
+# Allow sharing configuration
+COMPILE_ARGS += -I$(SRC_DIR)
+
+# Use multiplexed pipeline testbench
+VERILOG_SOURCES += $(PWD)/tb_mux_pipeline.v
+TOPLEVEL = tb_mux_pipeline
+
+# Multiplexed pipeline test modules
+COCOTB_TEST_MODULES = test_mux_pipeline
+
+# Include cocotb's make rules
+include $(shell cocotb-config --makefiles)/Makefile.sim

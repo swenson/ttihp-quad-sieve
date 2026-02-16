@@ -1,0 +1,28 @@
+# Makefile for Quadratic Sieve Pipeline Test
+# Tests factorization of N = 604227100699 = 677779 × 891481
+# using TWO block processors in a pipeline configuration
+
+# Defaults
+SIM ?= icarus
+FST ?= -fst
+TOPLEVEL_LANG ?= verilog
+SRC_DIR = $(PWD)/../src
+PROJECT_SOURCES = block_processor_core.v tt_um_swenson_params.v tt_um_swenson_inter_bp.v spi.v
+
+# RTL simulation
+SIM_BUILD = sim_build/qs_pipeline
+VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES))
+
+# Allow sharing configuration
+COMPILE_ARGS += -I$(SRC_DIR)
+COMPILE_ARGS += -DCOCOTB_SIM
+
+# Use QS pipeline testbench with two BPs
+VERILOG_SOURCES += $(PWD)/tb_qs_pipeline.v
+TOPLEVEL = tb_qs_pipeline
+
+# QS pipeline test module
+COCOTB_TEST_MODULES = test_qs_pipeline
+
+# Include cocotb's make rules
+include $(shell cocotb-config --makefiles)/Makefile.sim

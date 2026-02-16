@@ -1,9 +1,9 @@
 # Tiny Tapeout project information
 project:
-  title:        "cqs"      # Project title
+  title:        "quad-sieve"      # Project title
   author:       "Christopher Swenson"      # Your name
-  discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  "cqs"      # One line description of what your project does
+  discord:      "dr.cupcake"      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
+  description:  "TinyTapeout Quadratice Sieve chip based on 'A Pipeline Architecture for Factoring Large Integers with the Quadratic Sieve Algorithm' by Pomerance, Smith, and Tuler"      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
   clock_hz:     50000000       # Clock frequency in Hz (or 0 if not applicable)
 

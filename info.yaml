@@ -44,7 +44,7 @@ pinout:
   uo[4]: "out4"
   uo[5]: "out5"
   uo[6]: "out6"
-  uo[7]: "ou7"
+  uo[7]: "out7"
 
   # Bidirectional pins
   uio[0]: "cs"

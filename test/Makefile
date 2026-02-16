@@ -40,7 +40,10 @@ TOPLEVEL = tb
 COCOTB_TEST_MODULES = test
 
 # include cocotb's make rules to take care of the simulator setup
-include $(shell cocotb-config --makefiles)/Makefile.sim
+COCOTB_MAKEFILES_DIR := $(shell cocotb-config --makefiles 2>/dev/null)
+ifneq ($(COCOTB_MAKEFILES_DIR),)
+include $(COCOTB_MAKEFILES_DIR)/Makefile.sim
+endif
 
 # Phony targets for running all test suites
 .PHONY: test-all test-all-clean test-unit lint
